@@ -65,7 +65,7 @@ export default function AboutSection() {
     )
     
     // List item animations
-    const animateListItems = (listRef: React.RefObject<HTMLUListElement>) => {
+    const animateListItems = (listRef: React.RefObject<HTMLUListElement | null>) => {
       if (listRef.current) {
         const items = listRef.current.querySelectorAll('li')
         
@@ -89,18 +89,6 @@ export default function AboutSection() {
     animateListItems(listItems1Ref)
     animateListItems(listItems2Ref)
     
-    // Icon pulse effects
-    const icons = document.querySelectorAll('.text-primary')
-    icons.forEach(icon => {
-      gsap.to(icon, {
-        scale: 1.2,
-        duration: 0.8,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut"
-      })
-    })
-
     return () => {
       ScrollTrigger.getAll().forEach(trigger => trigger.kill())
     }

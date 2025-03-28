@@ -107,7 +107,6 @@ export default function TechStackSection() {
     <div 
       ref={sectionRef} 
       className="py-20 md:py-32 px-6 md:px-10 relative"
-      style={{ background: "linear-gradient(180deg, rgba(23, 52, 90, 0) 0%, rgba(23, 52, 90, 0.5) 100%)" }}
     >
       <div className="max-w-7xl mx-auto">
         <h2 ref={titleRef} className="text-3xl md:text-4xl font-bold text-center mb-6 text-white">
