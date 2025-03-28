@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react"
 import { cn } from "@/lib/utils"
 import { PresentationIcon, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import Image from "next/image"
 
 interface HeaderProps {
   title: string
@@ -66,7 +67,18 @@ export default function Header({
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <div className="flex items-center">
-          <span className="text-white font-medium text-xl md:text-2xl tracking-tight">{title}</span>
+          <div className="flex items-center gap-3">
+            <Image 
+              src="/fluffify_logo.png" 
+              alt="Fuzzify Logo" 
+              width={40} 
+              height={40} 
+              className="rounded-full"
+            />
+            <span className="text-white font-medium text-xl md:text-2xl tracking-tight font-aclonica">
+              Fuzzify
+            </span>
+          </div>
           {subtitle && <span className="hidden md:inline-block text-white/60 text-sm ml-4">{subtitle}</span>}
         </div>
 

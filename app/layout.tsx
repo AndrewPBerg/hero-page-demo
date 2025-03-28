@@ -1,14 +1,19 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
+import { Inter, Aclonica } from "next/font/google"
 import "./globals.css"
 
 const inter = Inter({ subsets: ["latin"] })
+const aclonica = Aclonica({ 
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-aclonica" 
+})
 
 export const metadata: Metadata = {
-  title: "Parallax Design | Modern Web Experiences",
+  title: "Fuzzify | Modern Web Experiences",
   description: "Experience the future of web design with smooth parallax effects and captivating animations",
-    generator: 'v0.dev'
+  generator: 'v0.dev'
 }
 
 export default function RootLayout({
@@ -18,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={`${inter.className} ${aclonica.variable}`}>{children}</body>
     </html>
   )
 }

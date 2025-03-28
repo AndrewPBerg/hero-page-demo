@@ -5,6 +5,7 @@ import type React from "react"
 import { useEffect, useRef } from "react"
 import { GradientText } from "@/components/ui/gradient-text"
 import { Shield } from "lucide-react"
+import Image from "next/image"
 
 export default function HeroSection() {
   const headingRef = useRef<HTMLHeadingElement>(null)
@@ -44,8 +45,8 @@ export default function HeroSection() {
             className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight"
             style={{ opacity: 0 }}
           >
-            <GradientText variant="white">DNS Fuzzing</GradientText>
-            <span className="text-white block mt-2">Protecting Your Digital Identity</span>
+            <GradientText variant="white" className="font-aclonica">Fuzzify</GradientText>
+            <span className="text-white block mt-2">Secure Digital Identity Protection</span>
           </h1>
           <p
             ref={subheadingRef}
@@ -70,7 +71,13 @@ export default function HeroSection() {
           <div className="relative w-full aspect-square max-w-md mx-auto">
             <div className="absolute inset-0 bg-gradient-to-br from-[#788EAC]/30 to-[#17345A]/30 rounded-3xl backdrop-blur-sm border border-white/20"></div>
             <div className="absolute inset-0 flex items-center justify-center">
-              <Shield className="w-3/4 h-3/4 text-white/30" />
+              <Image 
+                src="/fluffify_logo.png" 
+                alt="Fuzzify Logo" 
+                width={200} 
+                height={200}
+                className="animate-pulse"
+              />
             </div>
 
             {/* Interactive hotspots */}

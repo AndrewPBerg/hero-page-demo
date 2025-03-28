@@ -30,7 +30,7 @@ export default function Home() {
     <main className="min-h-screen bg-[#17345A] relative">
       <ParallaxBackground />
       <AnimatedBackground />
-      <MainContent title="DNS Fuzzing" subtitle="Protecting Your Digital Identity" sections={sections} />
+      <MainContent title="Fuzzify" subtitle="Secure Digital Identity Protection" sections={sections} />
     </main>
   )
 }

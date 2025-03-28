@@ -19,6 +19,9 @@ const config = {
       },
     },
     extend: {
+      fontFamily: {
+        aclonica: ['var(--font-aclonica)'],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
