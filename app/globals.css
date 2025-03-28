@@ -12,6 +12,13 @@ body {
   overflow-x: hidden;
 }
 
+/* 3D transform utilities */
+.transform-3d {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  transition: transform 0.5s ease;
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;

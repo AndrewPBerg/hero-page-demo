@@ -11,7 +11,7 @@ const aclonica = Aclonica({
 })
 
 export const metadata: Metadata = {
-  title: "Fuzzify | Modern Web Experiences",
+  title: "Fuzzify",
   description: "Experience the future of web design with smooth parallax effects and captivating animations",
   generator: 'v0.dev'
 }

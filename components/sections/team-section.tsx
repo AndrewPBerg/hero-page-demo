@@ -1,8 +1,12 @@
+"use client"
+
+import { useEffect, useRef } from "react"
+import gsap from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Github, Linkedin, Twitter } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { GradientText } from "@/components/ui/gradient-text"
 
 interface TeamMember {
   name: string
@@ -17,12 +21,93 @@ interface TeamMember {
 }
 
 export default function TeamSection() {
+  const sectionRef = useRef<HTMLDivElement>(null)
+  const titleRef = useRef<HTMLHeadingElement>(null)
+  const subtitleRef = useRef<HTMLParagraphElement>(null)
+  const cardContainerRef = useRef<HTMLDivElement>(null)
+  const memberRefs = useRef<HTMLDivElement[]>([])
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger)
+
+    // Title and subtitle animations
+    gsap.fromTo([titleRef.current, subtitleRef.current],
+      { y: 50, opacity: 0 },
+      { 
+        y: 0, 
+        opacity: 1, 
+        duration: 0.8,
+        stagger: 0.2,
+        scrollTrigger: {
+          trigger: titleRef.current,
+          start: "top bottom-=100",
+          toggleActions: "play none none reverse"
+        }
+      }
+    )
+
+    // Member cards animation with stagger
+    if (memberRefs.current.length > 0) {
+      gsap.fromTo(memberRefs.current,
+        { y: 80, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          stagger: 0.15,
+          duration: 0.7,
+          ease: "back.out(1.2)",
+          scrollTrigger: {
+            trigger: cardContainerRef.current,
+            start: "top bottom-=50",
+            toggleActions: "play none none reverse"
+          }
+        }
+      )
+    }
+
+    // Avatars hover effect
+    memberRefs.current.forEach((card) => {
+      const avatar = card.querySelector('.avatar-container')
+      
+      if (avatar) {
+        card.addEventListener('mouseenter', () => {
+          gsap.to(avatar, {
+            y: -10,
+            scale: 1.05,
+            duration: 0.3,
+            ease: "power2.out"
+          })
+        })
+        
+        card.addEventListener('mouseleave', () => {
+          gsap.to(avatar, {
+            y: 0,
+            scale: 1,
+            duration: 0.3,
+            ease: "power2.out"
+          })
+        })
+      }
+    })
+
+    return () => {
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill())
+    }
+  }, [])
+
+  // Add team members to refs
+  const addToRefs = (el: HTMLDivElement) => {
+    if (el && !memberRefs.current.includes(el)) {
+      memberRefs.current.push(el)
+    }
+  }
+
   const team: TeamMember[] = [
     {
       name: "Alex Johnson",
-      role: "Founder & CEO",
-      avatar: "/placeholder.svg?height=200&width=200",
-      bio: "Security researcher with 10+ years of experience in domain security and DNS infrastructure.",
+      role: "Founder & DNS Expert",
+      avatar: "/placeholder-user.jpg",
+      bio: "Former ICANN security advisor with 15+ years in domain security and DNS infrastructure protection.",
       social: {
         github: "https://github.com",
         twitter: "https://twitter.com",
@@ -31,9 +116,9 @@ export default function TeamSection() {
     },
     {
       name: "Sarah Chen",
-      role: "CTO",
-      avatar: "/placeholder.svg?height=200&width=200",
-      bio: "Former security engineer at Google with expertise in threat detection and prevention.",
+      role: "Chief Threat Intelligence",
+      avatar: "/placeholder-user.jpg",
+      bio: "Previously led threat detection at Cloudflare, specializing in domain-based attack vectors and phishing prevention.",
       social: {
         github: "https://github.com",
         linkedin: "https://linkedin.com",
@@ -41,9 +126,9 @@ export default function TeamSection() {
     },
     {
       name: "Michael Rodriguez",
-      role: "Lead Developer",
-      avatar: "/placeholder.svg?height=200&width=200",
-      bio: "Full-stack developer specializing in security applications and real-time monitoring systems.",
+      role: "Machine Learning Lead",
+      avatar: "/placeholder-user.jpg",
+      bio: "PhD in AI Security, developed pattern recognition systems for identifying lookalike domains and predicting threat levels.",
       social: {
         github: "https://github.com",
         twitter: "https://twitter.com",
@@ -51,9 +136,9 @@ export default function TeamSection() {
     },
     {
       name: "Emma Wilson",
-      role: "Security Researcher",
-      avatar: "/placeholder.svg?height=200&width=200",
-      bio: "PhD in Computer Security with focus on DNS vulnerabilities and attack vectors.",
+      role: "Threat Classification Expert",
+      avatar: "/placeholder-user.jpg",
+      bio: "Former cybersecurity analyst who specialized in developing risk scoring models for phishing domains and attack campaigns.",
       social: {
         github: "https://github.com",
         twitter: "https://twitter.com",
@@ -63,23 +148,27 @@ export default function TeamSection() {
   ]
 
   return (
-    <div className="py-20 md:py-32 px-6 md:px-10">
+    <div ref={sectionRef} className="py-20 md:py-32 px-6 md:px-10">
       <div className="max-w-7xl mx-auto">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-6">
-          <GradientText variant="white">Our Team</GradientText>
+        <h2 ref={titleRef} className="text-3xl md:text-4xl font-bold text-center mb-6 text-white">
+          Our Experts
         </h2>
 
         <div className="text-center max-w-2xl mx-auto mb-16">
-          <p className="text-lg text-white/80">
-            Our team of security experts and developers is dedicated to protecting your digital identity
+          <p ref={subtitleRef} className="text-lg text-white/80">
+            Meet the specialists who built <span className="font-aclonica">Fuzzify</span>'s threat detection and classification engine
           </p>
         </div>
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {team.map((member) => (
-            <Card key={member.name} className="overflow-hidden bg-white/10 backdrop-blur-md border border-white/10">
+        <div ref={cardContainerRef} className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {team.map((member, index) => (
+            <Card 
+              key={member.name} 
+              ref={addToRefs}
+              className="overflow-hidden bg-white/10 backdrop-blur-md border border-white/10 team-card"
+            >
               <CardHeader className="p-0">
-                <div className="aspect-square w-full bg-white/5 flex items-center justify-center">
+                <div className="aspect-square w-full bg-white/5 flex items-center justify-center avatar-container">
                   <Avatar className="h-32 w-32">
                     <AvatarImage src={member.avatar} alt={member.name} loading="lazy" />
                     <AvatarFallback className="bg-white/10 text-white">
@@ -93,8 +182,8 @@ export default function TeamSection() {
               </CardHeader>
               <CardContent className="pt-6">
                 <div className="text-center mb-4">
-                  <h3 className="font-bold text-lg">
-                    <GradientText variant="white">{member.name}</GradientText>
+                  <h3 className="font-bold text-lg text-white">
+                    {member.name}
                   </h3>
                   <p className="text-sm text-white/60">{member.role}</p>
                 </div>

@@ -75,7 +75,7 @@ export default function Header({
               height={40} 
               className="rounded-full"
             />
-            <span className="text-white font-medium text-xl md:text-2xl tracking-tight font-aclonica">
+            <span className="text-white font-medium text-xl md:text-2xl tracking-tight" style={{ fontFamily: 'var(--font-aclonica)'}}>
               Fuzzify
             </span>
           </div>

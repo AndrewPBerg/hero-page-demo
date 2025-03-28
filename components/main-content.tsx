@@ -3,15 +3,13 @@
 import { useState, useEffect, useRef } from "react"
 import Header from "@/components/header"
 import PresentationControls from "@/components/presentation-controls"
-import { SectionProgress } from "@/components/presentation/section-progress"
+import { StoryGuide } from "@/components/presentation/story-guide"
 import HeroSection from "@/components/sections/hero-section"
 import AboutSection from "@/components/sections/about-section"
 import TechStackSection from "@/components/sections/tech-stack-section"
 import TeamSection from "@/components/sections/team-section"
 import DemoSection from "@/components/sections/demo-section"
 import { cn } from "@/lib/utils"
-// Add import for StoryGuide
-import { StoryGuide } from "@/components/presentation/story-guide"
 
 interface Section {
   id: string
@@ -170,14 +168,6 @@ export default function MainContent({ title, subtitle, sections }: MainContentPr
         isPresentationMode={isPresentationMode}
         onSectionClick={scrollToSection}
         onStartPresentation={togglePresentationMode}
-      />
-
-      {/* Section progress indicator */}
-      <SectionProgress
-        sections={sections}
-        currentSectionIndex={currentSectionIndex}
-        isPresentationMode={isPresentationMode}
-        onSectionClick={scrollToSection}
       />
 
       {/* Main content */}
